@@ -1,39 +1,84 @@
-#include "Platform/Platform.hpp"
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
 int main()
 {
-	util::Platform platform;
+	// Create a window
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Golf Game");
+	window.setFramerateLimit(60);
 
-#if defined(_DEBUG)
-	std::cout << "Hello World!" << std::endl;
-#endif
+	// Define golf ball and hole positions
+	sf::Vector2f ballPosition(50, 50);
+	sf::Vector2f holePosition(700, 500);
 
-	sf::RenderWindow window;
-	// in Windows at least, this must be called before creating the window
-	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
-	// Use the screenScalingFactor
-	window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!");
-	platform.setIcon(window.getSystemHandle());
+	// Create golf ball and hole shapes
+	sf::CircleShape ball(10);
+	ball.setFillColor(sf::Color::White);
+	ball.setPosition(ballPosition);
 
-	sf::CircleShape shape(window.getSize().x / 2);
-	shape.setFillColor(sf::Color::White);
+	sf::CircleShape hole(15);
+	hole.setFillColor(sf::Color::Red);
+	hole.setPosition(holePosition);
 
-	sf::Texture shapeTexture;
-	shapeTexture.loadFromFile("content/sfml.png");
-	shape.setTexture(&shapeTexture);
+	sf::Texture texture;
+	if (!texture.loadFromFile("src/Assets/d6gfouv-d8377271-7f1b-4256-8dca-8263f3e7a64b.png"))
+	{
+		std::cout << "could not load";
+		return 0;
+	}
 
-	sf::Event event;
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+
+	// Variables for controlling the ball's movement
+	bool isMoving = false;
+	sf::Vector2f velocity;
 
 	while (window.isOpen())
 	{
+		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				if (!isMoving)
+				{
+					// Get the mouse click position
+					sf::Vector2f clickPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+
+					// Calculate velocity to move the ball towards the click position
+					velocity = clickPosition - ballPosition;
+					float length = sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+					velocity /= length;
+
+					isMoving = true;
+				}
+			}
 		}
 
-		window.clear();
-		window.draw(shape);
+		if (isMoving)
+		{
+			// Move the ball
+			ballPosition += velocity;
+
+			// Check if the ball reaches the hole
+			if (ball.getGlobalBounds().intersects(hole.getGlobalBounds()))
+			{
+				isMoving = false;
+				// Handle winning condition here
+			}
+		}
+
+		window.clear(sf::Color(0, 128, 0)); // Background color
+
+		// Draw the course, obstacles, and other game elements here
+
+		window.draw(ball);
+		window.draw(hole);
+		window.draw(sprite);
 		window.display();
 	}
 
