@@ -87,8 +87,9 @@
 // }
 
 #include <SFML/Graphics.hpp>
+#include "GUI.h"
 
-int main()
+int collision()
 {
 	sf::RenderWindow window(sf::VideoMode(1600, 1200), "Movable Ball with Rectangle Boundary");
 
@@ -96,13 +97,12 @@ int main()
 	ball.setFillColor(sf::Color::Red);
 	sf::Vector2f ballPosition(100, 300);
 	ball.setPosition(ballPosition);
-	float ballSpeed = 0.5f;
+	float ballSpeed = 5.0f;
 
 	sf::RectangleShape rectangle(sf::Vector2f(200, 100));
 	rectangle.setFillColor(sf::Color::Blue);
 	sf::Vector2f rectPosition(300, 300);
 	rectangle.setPosition(rectPosition);
-
 	while (window.isOpen())
 	{
 		sf::Event event;
