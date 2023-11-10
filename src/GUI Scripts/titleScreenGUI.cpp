@@ -1,9 +1,8 @@
 #include "GUI.h"
 
-int main()
+int titleScreen(sf::RenderWindow& window)
 {
-	sf::RenderWindow window(sf::VideoMode(1600, 1200), "Mini-Golf Simulator");
-
+	//load in textures and make sprites before the loop starts
 	//load background
 	sf::Texture background;
 	background.loadFromFile("titleBackground.png");
@@ -52,7 +51,7 @@ int main()
 	equipmentButtonSprite.setPosition(650.f, 760.f);
 	equipmentButtonSprite.setScale(0.9f, 0.9f);
 
-	//load hover button sprites
+	//load hover button textures but don't make sprites
 	sf::Texture playButtonHover;
 	playButtonHover.loadFromFile("playButtonClicked.png");
 
@@ -74,8 +73,13 @@ int main()
 		}
 
 		//check to see if the mouse is hovering over any of the buttons
+		//could write a function for this maybe
 		if (mouseHover(window, playButtonSprite)) {
 			playButtonSprite.setTexture(playButtonHover);
+
+			if (clickedButton(window, playButtonSprite)) {
+				courseSelection(window);
+			}
 		}
 		else {
 			playButtonSprite.setTexture(playButton);

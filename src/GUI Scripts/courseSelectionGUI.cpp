@@ -6,17 +6,10 @@ have unlocked so far... for now i'll just
 program the default that they should only have
 the first one available to them
 
-note for sam: make a new file with a function in it that
-just keeps track of all of the unlocked courses
-
-you can call this function whenever the conditions are met
-to unlock a new course when the player has finished a course
-(the results screen)
-
-the function can just contain a list or something, where
-index 0 is for course 1, and so on. make it a list of bools
-where true represents unlocked and false represents unlocked
+scratch that, the Game Progress class will handle
+most of this. they'll be dependent on each other though
 */
+
 int courseSelection(sf::RenderWindow& window) {
 	
 	//load in textures and create sprites
@@ -83,17 +76,17 @@ int courseSelection(sf::RenderWindow& window) {
 	sf::Texture lockedCourse;
 	lockedCourse.loadFromFile("lockedCourse.png");
 
-	sf::Sprite course1;
-	course1.setTexture(lockedCourse);
-	course1.setPosition(sf::Vector2f(250.f, 600.f));
+	sf::Sprite course1Sprite;
+	course1Sprite.setTexture(lockedCourse);
+	course1Sprite.setPosition(sf::Vector2f(250.f, 600.f));
 
-	sf::Sprite course2;
-	course2.setTexture(lockedCourse);
-	course2.setPosition(sf::Vector2f(650.f, 600.f));
+	sf::Sprite course2Sprite;
+	course2Sprite.setTexture(lockedCourse);
+	course2Sprite.setPosition(sf::Vector2f(650.f, 600.f));
 
-	sf::Sprite course3;
-	course3.setTexture(lockedCourse);
-	course3.setPosition(sf::Vector2f(1050.f, 600.f));
+	sf::Sprite course3Sprite;
+	course3Sprite.setTexture(lockedCourse);
+	course3Sprite.setPosition(sf::Vector2f(1050.f, 600.f));
 
 
 	while (window.isOpen())
@@ -109,6 +102,10 @@ int courseSelection(sf::RenderWindow& window) {
 
 		if (mouseHover(window, course1ButtonSprite)) {
 			course1ButtonSprite.setTexture(course1ButtonLocked);
+
+			if (clickedButton(window, course1ButtonSprite)) {
+				course1(window);
+			}
 		}
 		else {
 			course1ButtonSprite.setTexture(course1Button);
@@ -123,9 +120,9 @@ int courseSelection(sf::RenderWindow& window) {
 		window.draw(course1ButtonSprite);
 		window.draw(course2ButtonSprite);
 		window.draw(course3ButtonSprite);
-		window.draw(course1);
-		window.draw(course2);
-		window.draw(course3);
+		window.draw(course1Sprite);
+		window.draw(course2Sprite);
+		window.draw(course3Sprite);
 
 		window.display();
 	}
