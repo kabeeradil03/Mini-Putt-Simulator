@@ -2,6 +2,8 @@
 #include <cmath>
 #include <iostream>
 
+//script by Kabeer to manage collision physics
+
 // int main()
 // {
 // 	sf::RenderWindow window(sf::VideoMode(800, 600), "Movable Bounded Ball");
