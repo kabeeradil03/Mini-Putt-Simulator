@@ -1,6 +1,6 @@
 #include "GUI.h"
 
-int titleScreen(sf::RenderWindow& window)
+int titleScreen(sf::RenderWindow& window, GameProgress game)
 {
 	//load in textures and make sprites before the loop starts
 	//load background
@@ -32,24 +32,25 @@ int titleScreen(sf::RenderWindow& window)
 
 	sf::Sprite playButtonSprite;
 	playButtonSprite.setTexture(playButton);
-	playButtonSprite.setPosition(650.f, 650.f);
+	playButtonSprite.setPosition(600.f, 710.f);
+	playButtonSprite.setScale(1.25, 1.25);
 
-	//load settings button
-	sf::Texture settingsButton;
-	settingsButton.loadFromFile("settingsButton.png");
+	////load settings button
+	//sf::Texture settingsButton;
+	//settingsButton.loadFromFile("settingsButton.png");
 
-	sf::Sprite settingsButtonSprite;
-	settingsButtonSprite.setTexture(settingsButton);
-	settingsButtonSprite.setPosition(650.f, 860.f);
+	//sf::Sprite settingsButtonSprite;
+	//settingsButtonSprite.setTexture(settingsButton);
+	//settingsButtonSprite.setPosition(650.f, 860.f);
 
-	//load equipment button
-	sf::Texture equipmentButton;
-	equipmentButton.loadFromFile("equipmentButton.png");
+	////load equipment button
+	//sf::Texture equipmentButton;
+	//equipmentButton.loadFromFile("equipmentButton.png");
 
-	sf::Sprite equipmentButtonSprite;
-	equipmentButtonSprite.setTexture(equipmentButton);
-	equipmentButtonSprite.setPosition(650.f, 760.f);
-	equipmentButtonSprite.setScale(0.9f, 0.9f);
+	//sf::Sprite equipmentButtonSprite;
+	//equipmentButtonSprite.setTexture(equipmentButton);
+	//equipmentButtonSprite.setPosition(650.f, 760.f);
+	//equipmentButtonSprite.setScale(0.9f, 0.9f);
 
 	//load hover button textures but don't make sprites
 	sf::Texture playButtonHover;
@@ -78,7 +79,7 @@ int titleScreen(sf::RenderWindow& window)
 			playButtonSprite.setTexture(playButtonHover);
 
 			if (clickedButton(window, playButtonSprite)) {
-				courseSelection(window);
+				courseSelection(window, game);
 			}
 		}
 		else {
@@ -86,7 +87,7 @@ int titleScreen(sf::RenderWindow& window)
 		}
 
 
-		if (mouseHover(window, settingsButtonSprite)) {
+		/*if (mouseHover(window, settingsButtonSprite)) {
 			settingsButtonSprite.setTexture(settingsButtonHover);
 		}
 		else {
@@ -99,15 +100,15 @@ int titleScreen(sf::RenderWindow& window)
 		}
 		else {
 			equipmentButtonSprite.setTexture(equipmentButton);
-		}
+		}*/
 
 		window.clear(sf::Color::Black);
 		window.draw(backgroundSprite);
 		window.draw(titleSprite);
 		window.draw(logoSprite);
 		window.draw(playButtonSprite);
-		window.draw(settingsButtonSprite);
-		window.draw(equipmentButtonSprite);
+		/*window.draw(settingsButtonSprite);
+		window.draw(equipmentButtonSprite);*/
 		window.display();
 	}
 	return 0;
